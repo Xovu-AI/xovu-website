@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XOVU · In stealth</title>
+<meta name="description" content="XOVU is building XO, a personal agent. In stealth.">
+<link rel="canonical" href="https://xovu.ai/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xovu.ai/">
+<meta property="og:site_name" content="XOVU">
+<meta property="og:title" content="XOVU">
+<meta property="og:description" content="XOVU is building XO, a personal agent. In stealth.">
+<meta property="og:image" content="https://xovu.ai/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XO dot mark above the words IN STEALTH.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="XOVU">
+<meta name="twitter:description" content="XOVU is building XO, a personal agent. In stealth.">
+<meta name="twitter:image" content="https://xovu.ai/og-image.png">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F5F5F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
+<link rel="preload" href="fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Inter";src:url(fonts/Inter-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/Inter-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"JetBrains Mono";src:url(fonts/JetBrainsMono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+/* brand tokens: xovu-brand-kit/tokens/colors.json + XO app theme */
+:root{--bg:#F5F5F2;--fg:#0A0A0A;--muted:#6B6B66;--line:rgba(10,10,10,.12);--edge:rgba(10,10,10,.5);--paused:#C9C9C4;--field:#FFFFFF;
+  --ease:cubic-bezier(.45,0,.55,1);--sans:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+[data-theme="dark"]{--bg:#0A0A0A;--fg:#F5F5F2;--muted:#8E8E88;--line:rgba(245,245,242,.14);--edge:rgba(245,245,242,.34);--paused:#3C3C3A;--field:#151515}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;transition:background-color .3s var(--ease),color .3s var(--ease)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--fg);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.page{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;max-width:1180px;margin:0 auto;padding:0 40px}
+header{display:flex;align-items:center;justify-content:space-between;height:88px;gap:16px}
+header .logo{display:block;border-radius:8px}
+header .logo svg,header .logo img{height:34px;width:auto;display:block}
+.right{display:flex;align-items:center;gap:18px}
+.tag{display:flex;align-items:center;gap:10px}
+.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--fg);animation:bl 1.4s var(--ease) infinite}
+@keyframes bl{50%{opacity:.16}}
+.toggle{font:inherit;font-size:13px;display:flex;align-items:center;gap:8px;padding:7px 14px 7px 10px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer;transition:border-color .15s var(--ease)}
+.toggle:hover{border-color:var(--fg)}
+.toggle .ic{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--fg);background:linear-gradient(90deg,var(--fg) 50%,transparent 50%);transition:transform .3s var(--ease)}
+[data-theme="dark"] .toggle .ic{transform:rotate(180deg)}
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 0 56px}
+#mark{width:min(540px,84vw);transition:opacity .15s var(--ease)}
+#mark.fade{opacity:0}
+#mark .on{transition:fill .3s var(--ease)}
+#mark.paused .on{fill:var(--paused)}
+#mark svg,.ns-mark{width:100%;height:auto;display:block}
+.status{margin-top:20px;min-height:17px}
+.line{margin-top:30px;width:min(340px,70vw)}
+.line svg{width:100%;height:auto;display:block}
+.lead{margin-top:26px;font-size:clamp(17px,1.7vw,19px);line-height:1.55;letter-spacing:-.01em;max-width:440px}
+.lead span{display:block;color:var(--muted)}
+form{display:flex;gap:8px;margin-top:32px;width:min(460px,100%)}
+input{font:inherit;font-size:15px;flex:1;min-width:0;height:52px;padding:0 20px;border-radius:99px;border:1px solid var(--edge);background:var(--field);color:var(--fg);transition:background-color .3s var(--ease),border-color .15s var(--ease)}
+input::placeholder{color:var(--muted)}
+input:hover{border-color:var(--fg)}
+input:focus{outline:2px solid var(--fg);outline-offset:1px}
+input[aria-invalid="true"]{border-color:var(--fg)}
+.cta{font:inherit;font-size:15px;font-weight:600;height:52px;border:1px solid var(--fg);background:var(--fg);color:var(--bg);padding:0 22px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:background-color .3s var(--ease),color .3s var(--ease),opacity .15s var(--ease)}
+.cta:hover{opacity:.86}
+.cta:disabled{opacity:.5;cursor:default}
+.cta:focus-visible{outline-offset:3px;border-radius:99px}
+#msg{font-size:14px;margin-top:14px;min-height:21px}
+.note{margin-top:6px;letter-spacing:.08em;text-transform:none;font-size:11px}
+footer{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:22px 0 28px;border-top:1px solid var(--line)}
+footer nav{display:flex;gap:20px}
+footer a{text-decoration:none;transition:color .15s var(--ease)}footer a:hover{color:var(--fg)}
+.ns-mark{width:min(540px,84vw)}
+@media(max-width:560px){.page{padding:0 20px}header{height:76px}header .logo svg,header .logo img{height:30px}.tag{display:none}form{flex-direction:column}input{flex:none}.cta{width:100%}.line{margin-top:24px}}
+@media (prefers-reduced-motion:reduce){.tag::before{animation:none}body,.toggle .ic,input,.cta,#mark,#mark .on{transition:none}}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="logo" href="/" aria-label="XOVU home" id="logo"><img src="brand/xovu-lockup-horizontal-light.svg" alt="" width="102" height="34"></a>
+    <div class="right">
+      <span class="tag mono">In stealth</span>
+      <button class="toggle" id="toggle" type="button" aria-label="Dark mode" hidden><span class="ic" aria-hidden="true"></span><span id="toggleLabel">Dark</span></button>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="sr">XOVU. In stealth.</h1>
+    <div id="mark" aria-hidden="true"><noscript><img class="ns-mark" src="brand/xo-symbol-ink-with-cells.svg" alt=""></noscript></div>
+    <p class="status mono" id="status" aria-hidden="true"></p>
+    <div class="line" aria-hidden="true" id="line"></div>
+    <p class="lead">XOVU is building XO, a personal agent. <span>We’re in stealth for now.</span></p>
+    <form id="form" action="mailto:founder@xovu.ai?subject=XOVU%20early%20access" method="post" enctype="text/plain" novalidate>
+      <label class="sr" for="email">Email address</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required aria-describedby="msg note">
+      <button class="cta" type="submit">Get early access</button>
+    </form>
+    <div id="msg" role="status" aria-live="polite"></div>
+    <p class="note mono" id="note">Opens your mail app. Nothing is sent until you press send.</p>
+  </main>
+
+  <footer>
+    <span class="mono">© 2026 XOVU</span>
+    <nav><a class="mono" href="mailto:founder@xovu.ai">Contact</a></nav>
+  </footer>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const CONTACT='founder@xovu.ai';
+const INK='#0A0A0A',CHALK='#F5F5F2';
+/* xovu-brand-kit/tokens/colors.json */
+const THEMES={
+  light:{bg:CHALK,fg:INK,cell:'rgba(10,10,10,.08)',tile:INK,tileDots:CHALK},
+  dark:{bg:INK,fg:CHALK,cell:'rgba(245,245,242,.12)',tile:CHALK,tileDots:INK}
+};
+const LABEL={idle:'XO · Idle',thinking:'XO · Thinking',speaking:'XO · Speaking',done:'XO · Done',attention:'XO · Needs you',paused:'XO · Paused'};
+let theme='light';
+const T=()=>THEMES[theme];
+const rmq=window.matchMedia?matchMedia('(prefers-reduced-motion: reduce)'):null;
+let RM=!!(rmq&&rmq.matches);
+/* geometry: 10 x 5 grid, dot diameter 0.79 x pitch (xovu-brand-kit/README.md) */
+const P=8.9,R=3.5,X0=10,Y0=32.2,MVB='0 18 100 64',E='.45 0 .55 1';
+const f2=n=>Math.round(n*100)/100;
+const DX=c=>f2(X0+c*P),DY=r=>f2(Y0+r*P);
+const XG=['10001','01010','00100','01010','10001'],OG=['0110','1001','1001','1001','0110'];
+const CELLS=[];
+XG.forEach((row,r)=>[...row].forEach((b,i)=>CELLS.push({c:i,r,on:b==='1'})));
+OG.forEach((row,r)=>[...row].forEach((b,i)=>CELLS.push({c:6+i,r,on:b==='1'})));
+const svgWrap=(vb,inner)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" aria-hidden="true">${inner}</svg>`;
+
+/* one renderer per agent state, timings from tokens/motion.json */
+const DOT={
+  idle:(x,y,fg)=>`<circle class="on" cx="${x}" cy="${y}" r="${R}" fill="${fg}"/>`,
+  thinking:(x,y,fg,d)=>{const b=f2(d.c*.1+d.r*.025-1.4);return `<circle cx="${x}" cy="${y}" r="${R}" fill="${fg}"><animate attributeName="opacity" values="1;.16;1" keyTimes="0;.5;1" calcMode="spline" keySplines="${E};${E}" dur="1.4s" begin="${b}s" repeatCount="indefinite"/><animate attributeName="r" values="${R};2.4;${R}" keyTimes="0;.5;1" calcMode="spline" keySplines="${E};${E}" dur="1.4s" begin="${b}s" repeatCount="indefinite"/></circle>`},
+  speaking:(x,y,fg,d)=>{const b=f2(d.c*.09-1.2),h=f2(R*2*2.6),y0=f2(y-R),y1=f2(y-h/2);return `<rect x="${f2(x-R)}" y="${y0}" width="${R*2}" height="${R*2}" rx="${R}" fill="${fg}"><animate attributeName="height" values="${R*2};${h};${R*2}" keyTimes="0;.5;1" calcMode="spline" keySplines="${E};${E}" dur="1.2s" begin="${b}s" repeatCount="indefinite"/><animate attributeName="y" values="${y0};${y1};${y0}" keyTimes="0;.5;1" calcMode="spline" keySplines="${E};${E}" dur="1.2s" begin="${b}s" repeatCount="indefinite"/></rect>`},
+  done:(x,y,fg,d)=>`<circle cx="${x}" cy="${y}" r="${R}" fill="${fg}"><animate attributeName="r" values="${R};${f2(R*1.4)};${R}" keyTimes="0;.4;1" calcMode="spline" keySplines="${E};${E}" dur=".4s" begin="${f2(d.c*.045)}s" fill="freeze"/></circle>`,
+  attention:(x,y,fg,d)=>d.c===2&&d.r===2?`<circle cx="${x}" cy="${y}" r="${R}" fill="none" stroke="${fg}" stroke-width="1.1"><animate attributeName="r" values="${R};${f2(R*3.4)}" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="${x}" cy="${y}" r="${R}" fill="${fg}"><animate attributeName="r" values="${R};${f2(R*1.26)};${R}" keyTimes="0;.3;1" dur="1.6s" repeatCount="indefinite"/></circle>`:DOT.idle(x,y,fg)
+};
+function dots(st,fg,cell=null){
+  if(RM)st='idle';
+  let s='';
+  if(cell)CELLS.forEach(d=>{if(!d.on)s+=`<circle cx="${DX(d.c)}" cy="${DY(d.r)}" r="${R}" fill="${cell}"/>`});
+  CELLS.filter(d=>d.on).forEach(d=>{s+=DOT[st](DX(d.c),DY(d.r),fg,d)});
+  return s;
+}
+
+/* XOVU Dot alphabet, 7-row display face */
+const FONT={X:['10001','10001','01010','00100','01010','10001','10001'],O:['01110','10001','10001','10001','10001','10001','01110'],V:['10001','10001','10001','10001','01010','01010','00100'],U:['10001','10001','10001','10001','10001','10001','01110'],I:['01110','00100','00100','00100','00100','00100','01110'],N:['10001','10001','11001','10101','10011','10001','10001'],S:['01111','10000','10000','01110','00001','00001','11110'],T:['11111','00100','00100','00100','00100','00100','00100'],E:['11111','10000','10000','11110','10000','10000','11111'],A:['01110','10001','10001','11111','10001','10001','10001'],L:['10000','10000','10000','10000','10000','10000','11111'],H:['10001','10001','10001','11111','10001','10001','10001'],'.':['00000','00000','00000','00000','00000','01100','01100']};
+function dotText(str,fg,p=6,r=2.5){
+  let col=0,max=0,s='';
+  for(const ch of str){const g=FONT[ch];if(!g){col+=3;continue}
+    g.forEach((row,y)=>[...row].forEach((b,x)=>{if(b==='1'){s+=`<circle cx="${f2(r+(col+x)*p)}" cy="${f2(r+y*p)}" r="${r}"/>`;if(col+x>max)max=col+x}}));col+=6}
+  return {inner:`<g fill="${fg}">${s}</g>`,w:f2(max*p+2*r),h:f2(6*p+2*r)};
+}
+/* horizontal lockup: XO always sits in its tile next to the wordmark */
+function lockup(){
+  const c=T(),ts=56,gap=16,s=f2(P*.86*ts/100/6),t=dotText('XOVU',c.fg),wh=f2(t.h*s),ww=f2(t.w*s);
+  return svgWrap(`0 0 ${f2(ts+gap+ww)} ${ts}`,`<g transform="scale(${f2(ts/100)})"><rect width="100" height="100" rx="22.5" fill="${c.tile}"/><g transform="translate(50 50) scale(.86) translate(-50 -50)">${dots('idle',c.tileDots)}</g></g><g transform="translate(${ts+gap} ${f2((ts-wh)/2)}) scale(${s})">${t.inner}</g>`);
+}
+
+/* the mark: still when idle, and it answers what the visitor does */
+let state=null,timer=null,fadeT=null,resume='idle';
+const blocked=()=>document.hidden||navigator.onLine===false;
+/* paused keeps the idle drawing and greys the dots in place */
+function draw(){
+  $('#mark').innerHTML=svgWrap(MVB,dots(state==='paused'?'idle':state,T().fg,T().cell));
+  $('#mark').classList.toggle('paused',state==='paused');
+  $('#status').textContent=LABEL[state];
+}
+/* after: a state name or a function, run once on a single tracked timer */
+function show(st,{after,ms}={}){
+  clearTimeout(timer);
+  if(st!=='paused'&&state!==null&&blocked()){resume=st==='attention'?'attention':'idle';return}
+  if(after)timer=setTimeout(()=>typeof after==='function'?after():show(after),ms);
+  if(st===state)return;
+  const prev=state,m=$('#mark');state=st;
+  clearTimeout(fadeT);m.classList.remove('fade');
+  if(prev===null||RM){draw();return}
+  if(st==='paused'){
+    if(prev!=='idle')draw();
+    $('#status').textContent=LABEL.paused;
+    requestAnimationFrame(()=>m.classList.add('paused'));return}
+  if(prev==='paused'){
+    m.classList.remove('paused');$('#status').textContent=LABEL[st];
+    if(st!=='idle')fadeT=setTimeout(()=>crossfade(),300);return}
+  crossfade();
+}
+function crossfade(){
+  const m=$('#mark');m.classList.add('fade');
+  fadeT=setTimeout(()=>{draw();m.classList.remove('fade')},150);
+}
+
+/* theme: follows the device until the visitor chooses */
+const KEY='xovu-theme';
+const load=()=>{try{return localStorage.getItem(KEY)}catch(e){return null}};
+const save=t=>{try{localStorage.setItem(KEY,t)}catch(e){}};
+function applyTheme(t){
+  theme=t;
+  document.documentElement.dataset.theme=t;
+  const tg=$('#toggle');
+  tg.setAttribute('aria-pressed',t==='dark'?'true':'false');
+  $('#toggleLabel').textContent=t==='dark'?'Light':'Dark';
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m=>m.content=T().bg);
+  $('#logo').innerHTML=lockup();
+  const l=dotText('IN STEALTH.',T().fg);$('#line').innerHTML=svgWrap(`0 0 ${l.w} ${l.h}`,l.inner);
+  if(state)draw();
+}
+const mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+const stored=load();
+let userChose=stored==='light'||stored==='dark';
+applyTheme(userChose?stored:(mq&&mq.matches?'dark':'light'));
+if(mq&&mq.addEventListener)mq.addEventListener('change',e=>{if(!userChose)applyTheme(e.matches?'dark':'light')});
+$('#toggle').hidden=false;
+$('#toggle').addEventListener('click',()=>{userChose=true;applyTheme(theme==='dark'?'light':'dark');save(theme)});
+if(rmq&&rmq.addEventListener)rmq.addEventListener('change',e=>{RM=e.matches;if(RM)show('idle');else if(!held)release();draw()});
+
+/* showcase: XO runs through its everyday states until the visitor engages.
+   Needs you and Paused stay out, so they only ever mean what they say. */
+const CYCLE=[['speaking',2400],['idle',1800],['thinking',2800],['idle',1800],['done',1000],['idle',1800]];
+let ci=0,held=false;
+function ambient(){
+  if(held)return;
+  if(RM){show('idle');return}
+  const [st,ms]=CYCLE[ci];ci=(ci+1)%CYCLE.length;
+  show(st,{ms,after:ambient});
+}
+function release(){held=false;ci=0;show('idle',{ms:1800,after:ambient})}
+ambient();
+
+/* paused while the tab is hidden or the device is offline */
+const pause=()=>{if(state!=='paused')resume=state==='attention'?'attention':'idle';show('paused')};
+const wake=()=>{if(state!=='paused'||blocked())return;if(held)show(resume);else release()};
+document.addEventListener('visibilitychange',()=>document.hidden?pause():wake());
+addEventListener('offline',pause);addEventListener('online',wake);
+
+/* early access: no backend, so the request goes from the visitor's own mail app */
+const email=$('#email'),msg=$('#msg');
+/* the visitor has XO's attention: hold still while they type */
+email.addEventListener('focus',()=>{if(!held){held=true;show('idle')}});
+email.addEventListener('blur',()=>{if(!email.value&&email.getAttribute('aria-invalid')!=='true')release()});
+email.addEventListener('input',()=>{if(email.getAttribute('aria-invalid')==='true'){email.removeAttribute('aria-invalid');msg.textContent='';show('idle')}});
+$('#form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const v=email.value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){
+    email.setAttribute('aria-invalid','true');msg.textContent='Please enter a valid email address.';
+    held=true;show('attention');email.focus();return}
+  email.removeAttribute('aria-invalid');
+  const cta=$('.cta');cta.disabled=true;setTimeout(()=>{cta.disabled=false},1500);
+  location.href=`mailto:${CONTACT}?subject=${encodeURIComponent('XOVU early access')}&body=${encodeURIComponent(`Please add ${v} to the XOVU early access list.`)}`;
+  msg.textContent=`Thanks. If nothing opened, write to ${CONTACT}.`;
+  e.target.reset();
+  held=true;
+  show('thinking',{ms:700,after:()=>show('done',{ms:2000,after:release})});
+});
+</script>
+</body></html>

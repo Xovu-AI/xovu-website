@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XOVU · Not found</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:"Inter";src:url(/fonts/Inter-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"JetBrains Mono";src:url(/fonts/JetBrainsMono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+:root{--bg:#F5F5F2;--fg:#0A0A0A;--muted:#6B6B66;--line:rgba(10,10,10,.12);--paused:#C9C9C4;--cell:rgba(10,10,10,.08)}
+[data-theme="dark"]{--bg:#0A0A0A;--fg:#F5F5F2;--muted:#8E8E88;--line:rgba(245,245,242,.14);--paused:#3C3C3A;--cell:rgba(245,245,242,.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{margin:0;background:var(--bg)}main{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:24px;text-align:center;background:var(--bg);color:var(--fg);font-family:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+svg{width:min(300px,70vw);height:auto}
+.on{fill:var(--paused)}.off{fill:var(--cell)}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:17px;font-weight:400}
+a{display:inline-block;margin-top:6px;padding:12px 20px;border:1px solid var(--line);border-radius:99px;text-decoration:none;color:var(--fg);font-size:14px}
+a:hover{border-color:var(--fg)}a:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+<svg viewBox="0 18 100 64" aria-hidden="true" id="m"></svg>
+<span class="mono">XO · Paused</span>
+<h1>Nothing here yet.</h1>
+<a href="/">Back to xovu.ai</a>
+</main>
+<script>
+let t=null;try{t=localStorage.getItem('xovu-theme')}catch(e){}
+if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.dataset.theme=t;
+const X=['10001','01010','00100','01010','10001'],O=['0110','1001','1001','1001','0110'];let s='';
+X.forEach((row,r)=>[...row].forEach((b,c)=>s+=`<circle cx="${(10+c*8.9).toFixed(2)}" cy="${(32.2+r*8.9).toFixed(2)}" r="3.5" class="${b==='1'?'on':'off'}"/>`));
+O.forEach((row,r)=>[...row].forEach((b,c)=>s+=`<circle cx="${(10+(6+c)*8.9).toFixed(2)}" cy="${(32.2+r*8.9).toFixed(2)}" r="3.5" class="${b==='1'?'on':'off'}"/>`));
+document.getElementById('m').innerHTML=s;
+</script>
+</body></html>

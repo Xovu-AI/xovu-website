@@ -1,0 +1,21 @@
+{
+  "name": "XOVU",
+  "short_name": "XOVU",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#F5F5F2",
+  "background_color": "#F5F5F2",
+  "display": "standalone",
+  "description": "XOVU is building XO, a personal agent. In stealth.",
+  "start_url": "/"
+}
