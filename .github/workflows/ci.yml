@@ -1,0 +1,73 @@
+name: Website CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: website-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  static-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check JavaScript syntax
+        run: node --check brand.js
+      - name: Validate configuration and local page assets
+        shell: bash
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m json.tool vercel.json > /dev/null
+          python -m json.tool site.webmanifest > /dev/null
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+          import xml.etree.ElementTree as ET
+
+          root = Path.cwd()
+          ET.parse(root / 'sitemap.xml')
+          errors = []
+
+          class Assets(HTMLParser):
+              def handle_starttag(self, tag, attrs):
+                  for key, value in attrs:
+                      if key not in ('href', 'src') or not value:
+                          continue
+                      url = urlsplit(value)
+                      if url.scheme or url.netloc or not url.path:
+                          continue
+                      path = unquote(url.path)
+                      target = (root / path.lstrip('/') if path.startswith('/') else self.page.parent / path).resolve()
+                      if not target.is_relative_to(root):
+                          errors.append(f'{self.page.name}: path escapes site root: {value}')
+                          continue
+                      candidates = [target, target / 'index.html']
+                      if not target.suffix:
+                          candidates.append(target.with_suffix('.html'))
+                      if not any(candidate.is_file() for candidate in candidates):
+                          errors.append(f'{self.page.name}: missing local asset: {value}')
+
+          for required in ('index.html', 'privacy.html', 'terms.html', '404.html'):
+              if not (root / required).is_file():
+                  errors.append(f'Missing page: {required}')
+          for page in root.glob('*.html'):
+              parser = Assets(convert_charrefs=True)
+              parser.page = page
+              parser.feed(page.read_text(encoding='utf-8'))
+          if errors:
+              raise SystemExit('\n'.join(errors))
+          print('Configuration, sitemap, and local page assets are valid.')
+          PY
